@@ -6,11 +6,11 @@ public class TempPlayerController : MonoBehaviour
 {
     [SerializeField] float MoveTime = 1f;
 
-    public MapController controller;
+    MapController _mapController;
     float t = 0f;
     void Start()
     {
-        
+        _mapController = MapController.Instance;
     }
 
     // Update is called once per frame
@@ -35,7 +35,7 @@ public class TempPlayerController : MonoBehaviour
 
         
 
-        if (controller.MoveTo(pos, tar)) {
+        if (_mapController.MoveTo(pos, tar)) {
             Vector2 targetLocation = MapController.CalculatePositionFromIndex((int)tar.x, (int)tar.y);
             transform.position = new Vector3(targetLocation.x, 1, targetLocation.y);
         }
