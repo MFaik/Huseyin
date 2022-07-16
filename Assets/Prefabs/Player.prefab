@@ -738,7 +738,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3946393376062281945}
   m_Layer: 0
-  m_Name: EmptyFaces (1)
+  m_Name: EmptyFaces
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -942,12 +942,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RendererChild: {fileID: 3917766741720809549}
-  TopFace: {fileID: 9203744976984229060}
-  XPFace: {fileID: 1425362358}
-  XMFace: {fileID: 7461198453223180104}
-  ZPFace: {fileID: 4247853020096067913}
-  ZMFace: {fileID: 7734610288436475062}
-  BotFace: {fileID: 6466475381315843420}
+  Faces:
+  - {fileID: 9203744976984229060}
+  - {fileID: 1425362358}
+  - {fileID: 7461198453223180104}
+  - {fileID: 4247853020096067913}
+  - {fileID: 7734610288436475062}
+  - {fileID: 6466475381315843420}
 --- !u!1 &6206968824312015626
 GameObject:
   m_ObjectHideFlags: 0

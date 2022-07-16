@@ -21,12 +21,6 @@ public class EnemyManager : MonoBehaviour {
         SpawnEnemy(new Vector2(5,5));
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            NextStep();
-        }
-    }
-
     public static void SpawnEnemy(Vector2 SpawnIndex) {
         Vector2 temp = MapController.TilemapToWorldPoint((int)SpawnIndex.x, (int)SpawnIndex.y);
 
@@ -37,9 +31,9 @@ public class EnemyManager : MonoBehaviour {
         Instance.enemies.Add(enemy);
     }
 
-    public static void NextStep() {
+    public static IEnumerator NextStep() {
         foreach (Enemy enemy in Instance.enemies) {
-            Instance.StartCoroutine(enemy.NextStep());
+            yield return enemy.NextStep();
         }
     }
 }
