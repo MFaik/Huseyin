@@ -7,6 +7,8 @@ public class MapController : MonoBehaviour
     [SerializeField]
     GameObject MapObject;
 
+    public static Vector2 PlayerPosition;
+
     GameObject[][] _tileset;
     static Vector2 mapSize;
 
@@ -32,6 +34,9 @@ public class MapController : MonoBehaviour
 
     public static bool MoveTo(Vector2 from, Vector2 to) {
         if(CheckEntity(from) && CheckValidPosition(to) && !CheckEntity(to)) {
+
+            if (from.x == PlayerPosition.x && from.y == PlayerPosition.y) PlayerPosition = to;
+
             Instance._tileset[(int)to.x][(int)to.y] = Instance._tileset[(int)from.x][(int)from.y];
             Instance._tileset[(int)from.x][(int)from.y] = null;
             return true;
@@ -43,6 +48,8 @@ public class MapController : MonoBehaviour
     public static void SpawnEntity(GameObject objectRef, Vector2 pos) {
         if (!CheckEntity(pos)) {
             Instance._tileset[(int)pos.x][(int)pos.y] = objectRef;
+
+            if (objectRef.CompareTag("Player")) PlayerPosition = pos;
         } else {
             Debug.LogError("Entity Cannot Spawn At Position : " + pos.x + ":" + pos.y);
         }

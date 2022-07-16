@@ -26,9 +26,7 @@ public class BulletManager : MonoBehaviour
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space)){
-            foreach(Bullet bul in bullets) {
-                StartCoroutine(bul.NextStep());
-            }
+            NextStep();
         }
     }
 
@@ -38,5 +36,11 @@ public class BulletManager : MonoBehaviour
         bullet.Init(SpawnIndex, velocity);
 
         Instance.bullets.Add(bullet);
+    }
+
+    public static void NextStep() {
+        foreach (Bullet bul in Instance.bullets) {
+            Instance.StartCoroutine(bul.NextStep());
+        }
     }
 }

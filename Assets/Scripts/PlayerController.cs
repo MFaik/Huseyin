@@ -78,7 +78,8 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Turn(Direction direction) {
         CanTurn = false;
-        switch(direction){
+
+        switch (direction){
             case Direction.ZP:
                 transform.position += ZP;
                 RendererChild.position -= ZP;
@@ -117,6 +118,9 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1);//HACK: eren bulletlari fixle
         //HACK: simdilik boyle kalsin turn manager bekliyor
         EnableTurn();
+
+        EnemyManager.NextStep();
+        BulletManager.NextStep();
     }
 
     
