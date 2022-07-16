@@ -215,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 49198473}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalScale: {x: 20, y: 1, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -233,8 +233,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f7558c994d35a43b83a8b3c6ed25e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 49198473}
-  player: {fileID: 404672440}
+  MapObject: {fileID: 0}
+  PlayerObject: {fileID: 0}
 --- !u!1 &404672440
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,8 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f00d64877177424ea89e4bba2db1104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 49198478}
-  MoveTime: 1
+  MoveTime: 0.5
 --- !u!1 &491006553
 GameObject:
   m_ObjectHideFlags: 0

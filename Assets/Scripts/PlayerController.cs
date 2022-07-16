@@ -28,21 +28,21 @@ public class PlayerController : MonoBehaviour
 
         Vector2 tilemapPosition = MapController.WorldToTilemapPoint(transform.position.x, transform.position.z);
         
-        if(Input.GetAxisRaw("Horizontal") > 0.1f){
+        if(Input.GetAxisRaw("Vertical") > 0.1f){
             if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(0,1)))
                 StartCoroutine(PlayerTurn(Direction.ZP));
         }  
-        else if(Input.GetAxisRaw("Horizontal") < -0.1f){
+        else if(Input.GetAxisRaw("Vertical") < -0.1f){
             if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(0,-1)))
                 StartCoroutine(PlayerTurn(Direction.ZM));
         } 
-        else if(Input.GetAxisRaw("Vertical") < -0.1f){
-            if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(1,0)))
-                StartCoroutine(PlayerTurn(Direction.XP));
-        } 
-        else if(Input.GetAxisRaw("Vertical") > 0.1f){
+        else if(Input.GetAxisRaw("Horizontal") < -0.1f){
             if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(-1,0)))
                 StartCoroutine(PlayerTurn(Direction.XM));
+        } 
+        else if(Input.GetAxisRaw("Horizontal") > 0.1f){
+            if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(1,0)))
+                StartCoroutine(PlayerTurn(Direction.XP));
         }   
     }
 
