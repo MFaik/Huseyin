@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour
     public Tween Init(Vector2 spawnPos, Vector2 vel) {
         _velocity = vel;
 
-        Vector2 temp = MapController.TilemapToWorldPoint((int)spawnPos.x, (int)spawnPos.y); ;
+        Vector2 temp = MapManager.TilemapToWorldPoint((int)spawnPos.x, (int)spawnPos.y); ;
         Vector3 targetPosition = new Vector3(temp.x, 1f, temp.y);
 
         return transform.DOMove(targetPosition, 0.1f);
@@ -23,11 +23,11 @@ public class Bullet : MonoBehaviour
             _firstTurn = false;
             return null;
         }
-        Vector2 currentIndex = MapController.WorldToTilemapPoint(transform.position.x, transform.position.z);
+        Vector2 currentIndex = MapManager.WorldToTilemapPoint(transform.position.x, transform.position.z);
 
         Vector2 targetIndex = currentIndex + _velocity;
         
-        Vector2 temp = MapController.TilemapToWorldPoint((int)targetIndex.x, (int)targetIndex.y); ;
+        Vector2 temp = MapManager.TilemapToWorldPoint((int)targetIndex.x, (int)targetIndex.y); ;
         Vector3 targetPosition = new Vector3(temp.x, 1, temp.y);
 
         return transform.DOMove(targetPosition, 0.3f);

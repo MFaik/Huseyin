@@ -20,13 +20,13 @@ public class Item : ScriptableObject
         switch(item){
             case ItemEnum.Pistol:
                 yield return BulletManager.SpawnBullet(position,
-                                            MapController.WorldToTilemapPoint(position.x + direction.x, position.z + direction.y),direction).WaitForCompletion();
+                                            MapManager.WorldToTilemapPoint(position.x + direction.x, position.z + direction.y),direction).WaitForCompletion();
             break;
             case ItemEnum.Shotgun:
                 Sequence shotgunSequence = DOTween.Sequence();
 
                 shotgunSequence.Join(BulletManager.SpawnBullet(position,
-                                            MapController.WorldToTilemapPoint(position.x + direction.x, position.z + direction.y),direction));
+                                            MapManager.WorldToTilemapPoint(position.x + direction.x, position.z + direction.y),direction));
 
                 Vector2 leftDirection = direction;
                 Vector2 rightDirection = direction;
@@ -38,9 +38,9 @@ public class Item : ScriptableObject
                     rightDirection.y = 1;
                 }
                 shotgunSequence.Join(BulletManager.SpawnBullet(position,
-                                            MapController.WorldToTilemapPoint(position.x + leftDirection.x, position.z + leftDirection.y),leftDirection));
+                                            MapManager.WorldToTilemapPoint(position.x + leftDirection.x, position.z + leftDirection.y),leftDirection));
                 shotgunSequence.Join(BulletManager.SpawnBullet(position,
-                                            MapController.WorldToTilemapPoint(position.x + rightDirection.x, position.z + rightDirection.y),rightDirection));
+                                            MapManager.WorldToTilemapPoint(position.x + rightDirection.x, position.z + rightDirection.y),rightDirection));
 
                 yield return shotgunSequence.WaitForCompletion();
             break;

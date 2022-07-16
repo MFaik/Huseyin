@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapController : MonoBehaviour
+public class MapManager : MonoBehaviour
 {
-    [SerializeField]
-    GameObject MapObject;
+    GameObject _mapObject;
 
     public static Vector2 PlayerPosition;
 
     GameObject[][] _tileset;
     static Vector2 mapSize;
 
-    public static MapController Instance { get; private set; }
+    public static MapManager Instance { get; private set; }
     private void Awake() {
         if (Instance != null && Instance != this) {
             Destroy(this);
@@ -23,7 +22,9 @@ public class MapController : MonoBehaviour
     }
 
     void MapInit() {
-        mapSize = new Vector2(MapObject.transform.localScale.x, MapObject.transform.localScale.z);
+        _mapObject = GameObject.FindGameObjectWithTag("Map");
+
+        mapSize = new Vector2(_mapObject.transform.localScale.x, _mapObject.transform.localScale.z);
 
         _tileset = new GameObject[(int)mapSize.x][];
 

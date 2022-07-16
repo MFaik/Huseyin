@@ -28,13 +28,13 @@ public class EnemyManager : MonoBehaviour {
     }
 
     public static void SpawnEnemy(Vector2 SpawnIndex) {
-        if(MapController.CheckValidPosition(SpawnIndex) && !MapController.CheckEntity(SpawnIndex)) {
-            Vector2 temp = MapController.TilemapToWorldPoint((int)SpawnIndex.x, (int)SpawnIndex.y);
+        if(MapManager.CheckValidPosition(SpawnIndex) && !MapManager.CheckEntity(SpawnIndex)) {
+            Vector2 temp = MapManager.TilemapToWorldPoint((int)SpawnIndex.x, (int)SpawnIndex.y);
 
             Vector3 pos = new Vector3(temp.x, 1, temp.y);
             var enemy = Instantiate(Instance.EnemyPrefab, pos, Quaternion.identity).GetComponent<Enemy>();
 
-            MapController.SpawnEntity(enemy.gameObject, SpawnIndex);
+            MapManager.SpawnEntity(enemy.gameObject, SpawnIndex);
             Instance.enemies.Add(enemy);
         } else {
             Debug.LogError("Entity Cannot Spawn At Position : " + SpawnIndex.x + ":" + SpawnIndex.y);

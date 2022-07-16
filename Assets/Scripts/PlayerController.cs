@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
     }
 
     void Start() {
-        MapController.SpawnEntity(gameObject, new Vector2(0,0));
-        Vector2 startPos = MapController.TilemapToWorldPoint(0,0);
+        MapManager.SpawnEntity(gameObject, new Vector2(0,0));
+        Vector2 startPos = MapManager.TilemapToWorldPoint(0,0);
         transform.position = new Vector3(startPos.x, 0.5f, startPos.y);
     }
 
@@ -28,22 +28,22 @@ public class PlayerController : MonoBehaviour
 
     void Update() {
         if(CanTurn){
-            Vector2 tilemapPosition = MapController.WorldToTilemapPoint(transform.position.x, transform.position.z);
+            Vector2 tilemapPosition = MapManager.WorldToTilemapPoint(transform.position.x, transform.position.z);
             
             if(Input.GetAxisRaw("Vertical") > 0.1f){
-                if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(0, 1)))
+                if(MapManager.MoveTo(tilemapPosition, tilemapPosition + new Vector2(0, 1)))
                     StartCoroutine(Turn(Direction.ZP));
             }  
             else if(Input.GetAxisRaw("Vertical") < -0.1f){
-                if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(0,-1)))
+                if(MapManager.MoveTo(tilemapPosition, tilemapPosition + new Vector2(0,-1)))
                     StartCoroutine(Turn(Direction.ZM));
             } 
             else if(Input.GetAxisRaw("Horizontal") < -0.1f){
-                if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(-1,0)))
+                if(MapManager.MoveTo(tilemapPosition, tilemapPosition + new Vector2(-1,0)))
                     StartCoroutine(Turn(Direction.XM));
             } 
             else if(Input.GetAxisRaw("Horizontal") > 0.1f){
-                if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2( 1,0)))
+                if(MapManager.MoveTo(tilemapPosition, tilemapPosition + new Vector2( 1,0)))
                     StartCoroutine(Turn(Direction.XP));
             }   
         } else if(CanShoot) {
