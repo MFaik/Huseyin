@@ -21,15 +21,12 @@ public class EnemyManager : MonoBehaviour {
         
     }
 
-<<<<<<< HEAD
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
             SpawnEnemy(new Vector2(5, 5));
         }
     }
 
-=======
->>>>>>> c2a50ea37ba8e36bb0cc67f8efc388b7b2e9dd3d
     public static void SpawnEnemy(Vector2 SpawnIndex) {
         if(MapController.CheckValidPosition(SpawnIndex) && !MapController.CheckEntity(SpawnIndex)) {
             Vector2 temp = MapController.TilemapToWorldPoint((int)SpawnIndex.x, (int)SpawnIndex.y);
