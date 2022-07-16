@@ -7,7 +7,13 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] Transform RendererChild;
 
-    bool Turning = false;
+    [SerializeField] PlayerFaceController TopFace;
+    [SerializeField] PlayerFaceController XPFace;
+    [SerializeField] PlayerFaceController XMFace;
+    [SerializeField] PlayerFaceController ZPFace;
+    [SerializeField] PlayerFaceController ZMFace;
+    [SerializeField] PlayerFaceController BotFace;
+
 
     enum Direction {
         ZP,
@@ -22,37 +28,56 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3(startPos.x, 0.5f, startPos.y);
     }
 
-    void Update() {
-        if(Turning)
-            return;
+    bool CanTurn = true;//HACK: turn manager
+    bool CanShoot = false;
 
-        Vector2 tilemapPosition = MapController.WorldToTilemapPoint(transform.position.x, transform.position.z);
-        
-        if(Input.GetAxisRaw("Vertical") > 0.1f){
-            if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(0,1)))
-                StartCoroutine(PlayerTurn(Direction.ZP));
-        }  
-        else if(Input.GetAxisRaw("Vertical") < -0.1f){
-            if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(0,-1)))
-                StartCoroutine(PlayerTurn(Direction.ZM));
-        } 
-        else if(Input.GetAxisRaw("Horizontal") < -0.1f){
-            if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(-1,0)))
-                StartCoroutine(PlayerTurn(Direction.XM));
-        } 
-        else if(Input.GetAxisRaw("Horizontal") > 0.1f){
-            if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(1,0)))
-                StartCoroutine(PlayerTurn(Direction.XP));
-        }   
+    void Update() {
+        if(CanTurn){
+            Vector2 tilemapPosition = MapController.WorldToTilemapPoint(transform.position.x, transform.position.z);
+            
+            if(Input.GetAxisRaw("Vertical") > 0.1f){
+                if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(0, 1)))
+                    StartCoroutine(Turn(Direction.ZP));
+            }  
+            else if(Input.GetAxisRaw("Vertical") < -0.1f){
+                if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(0,-1)))
+                    StartCoroutine(Turn(Direction.ZM));
+            } 
+            else if(Input.GetAxisRaw("Horizontal") < -0.1f){
+                if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(-1,0)))
+                    StartCoroutine(Turn(Direction.XM));
+            } 
+            else if(Input.GetAxisRaw("Horizontal") > 0.1f){
+                if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2( 1,0)))
+                    StartCoroutine(Turn(Direction.XP));
+            }   
+        } else if(CanShoot) {
+            if(Input.GetAxisRaw("Vertical") > 0.1f){
+                StartCoroutine(Shoot(new Vector2(0, 1)));
+            }  
+            else if(Input.GetAxisRaw("Vertical") < -0.1f){
+                StartCoroutine(Shoot(new Vector2(0,-1)));
+            } 
+            else if(Input.GetAxisRaw("Horizontal") < -0.1f){
+                StartCoroutine(Shoot(new Vector2(-1,0)));
+            } 
+            else if(Input.GetAxisRaw("Horizontal") > 0.1f){
+                StartCoroutine(Shoot(new Vector2( 1,0)));
+            }   
+        }
     }
 
-    Vector3 ZP = new Vector3(0,0,0.5f);
+    public void EnableTurn(){
+        CanTurn = true;
+    }
+
+    Vector3 ZP = new Vector3(0,0, 0.5f);
     Vector3 ZM = new Vector3(0,0,-0.5f);
-    Vector3 XP = new Vector3(0.5f,0,0);
+    Vector3 XP = new Vector3( 0.5f,0,0);
     Vector3 XM = new Vector3(-0.5f,0,0);
 
-    IEnumerator PlayerTurn(Direction direction) {
-        Turning = true;
+    IEnumerator Turn(Direction direction) {
+        CanTurn = false;
         switch(direction){
             case Direction.ZP:
                 transform.position += ZP;
@@ -83,7 +108,20 @@ public class PlayerController : MonoBehaviour
                 RendererChild.position -= XM;
             break;
         }
-        Turning = false;
-        yield break;
+        CanShoot = true;
+    }
+
+    IEnumerator Shoot(Vector2 direction){
+        CanShoot = false;
+        yield return GetActiveItem().Shoot(transform.position, direction);
+        yield return new WaitForSeconds(1);//HACK: eren bulletlari fixle
+        //HACK: simdilik boyle kalsin turn manager bekliyor
+        EnableTurn();
+    }
+
+    
+
+    Item GetActiveItem(){
+        return TopFace.Item;
     }
 }

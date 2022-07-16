@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class PlayerFaceController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Item _item;//HACK: wait for item manager
+    public Item Item
     {
-        
+        get {return _item;}
+        set {
+            _meshRenderer.material = value.material;
+            _item = value;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    MeshRenderer _meshRenderer;
+
+    void Awake() {
+        _meshRenderer = GetComponent<MeshRenderer>();    
     }
 }
