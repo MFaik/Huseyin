@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
         Vector2 temp = MapManager.TilemapToWorldPoint((int)spawnPos.x, (int)spawnPos.y); ;
         Vector3 targetPosition = new Vector3(temp.x, 1f, temp.y);
 
-        return transform.DOMove(targetPosition, 0.1f);
+        return transform.DOMove(targetPosition, 0.1f).OnComplete(TersTaklaAt);
     }
 
     public Tween NextStep() {
@@ -31,5 +31,15 @@ public class Bullet : MonoBehaviour
         Vector3 targetPosition = new Vector3(temp.x, 1, temp.y);
 
         return transform.DOMove(targetPosition, 0.3f);
+    }
+
+    public void TersTaklaAt() {
+        GetComponent<Collider>().enabled = true;
+    }
+
+    private void OnCollisionEnter(Collision collision) {
+        BulletManager.DestroyBullet(this);
+
+        gameObject.SetActive(false);
     }
 }

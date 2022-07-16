@@ -25,13 +25,29 @@ public class BigBob : Enemy
         } else {
             Vector2 dif = new Vector2(Mathf.Abs(currentPos.x - MapManager.PlayerPosition.x),
                                       Mathf.Abs(currentPos.y - MapManager.PlayerPosition.y));
-
+            Vector2 tar;
             if(dif.x < dif.y) {
                 //Move In X
-                yield return Move(currentPos + new Vector2((MapManager.PlayerPosition.x < currentPos.x ? -1 : 1), 0));
+                tar = new Vector2((MapManager.PlayerPosition.x < currentPos.x ? -1 : 1), 0);
+                yield return Move(currentPos + tar);
             } else {
                 //Move In Y
-                yield return Move(currentPos + new Vector2(0, (MapManager.PlayerPosition.y < currentPos.y ? -1 : 1)));
+                tar = new Vector2(0, (MapManager.PlayerPosition.y < currentPos.y ? -1 : 1));
+                yield return Move(currentPos + tar);
+            }
+
+            currentPos += tar;
+
+            if (currentPos.x == MapManager.PlayerPosition.x) {
+                if (_shootCounter == 0) {
+                    Vector2 angle = new Vector2(0, (MapManager.PlayerPosition.y < currentPos.y ? -1 : 1));
+                    Shoot(currentPos + angle, angle);
+                }
+            } else if (currentPos.y == MapManager.PlayerPosition.y) {
+                if (_shootCounter == 0) {
+                    Vector2 angle = new Vector2((MapManager.PlayerPosition.x < currentPos.x ? -1 : 1), 0);
+                    Shoot(currentPos + angle, angle);
+                }
             }
         }
 

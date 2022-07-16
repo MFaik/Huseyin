@@ -37,4 +37,8 @@ public class BulletManager : MonoBehaviour
         bulletSequence.Play();
         yield return bulletSequence.WaitForCompletion();
     }
+
+    public static void DestroyBullet(Bullet refObject) {
+        Instance.bullets.Remove(refObject);
+    }
 }
