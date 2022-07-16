@@ -7,12 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] Transform RendererChild;
 
-    [SerializeField] PlayerFaceController TopFace;
-    [SerializeField] PlayerFaceController XPFace;
-    [SerializeField] PlayerFaceController XMFace;
-    [SerializeField] PlayerFaceController ZPFace;
-    [SerializeField] PlayerFaceController ZMFace;
-    [SerializeField] PlayerFaceController BotFace;
+    [SerializeField] PlayerFaceController[] Faces;
 
 
     enum Direction {
@@ -28,7 +23,7 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3(startPos.x, 0.5f, startPos.y);
     }
 
-    bool CanTurn = true;//HACK: turn manager
+    bool CanTurn = false;
     bool CanShoot = false;
 
     void Update() {
@@ -115,17 +110,14 @@ public class PlayerController : MonoBehaviour
     IEnumerator Shoot(Vector2 direction){
         CanShoot = false;
         yield return GetActiveItem().Shoot(transform.position, direction);
-        yield return new WaitForSeconds(1);//HACK: eren bulletlari fixle
-        //HACK: simdilik boyle kalsin turn manager bekliyor
-        EnableTurn();
-
-        EnemyManager.NextStep();
-        BulletManager.NextStep();
+        TurnManager.ContinueTurnAfterPlayer();
     }
 
-    
-
     Item GetActiveItem(){
-        return TopFace.Item;
+        foreach(var face in Faces){
+            if(Mathf.Abs(face.transform.rotation.eulerAngles.x-90) < 1f && Mathf.Abs(face.transform.rotation.eulerAngles.z) < 1f)
+                return face.Item; 
+        }
+        return null;
     }
 }

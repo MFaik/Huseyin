@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class BulletManager : MonoBehaviour
 {
     [SerializeField]
     GameObject BulletPrefab;
-    [SerializeField]
-    GameObject SpawnLocation;
 
     List<Bullet> bullets = new List<Bullet>();
 
@@ -20,6 +19,7 @@ public class BulletManager : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     void Start() {
         SpawnBullet(SpawnLocation.transform.position, new Vector2(5, 5), new Vector2(1, 1));
     }
@@ -31,16 +31,24 @@ public class BulletManager : MonoBehaviour
     }
 
     public static void SpawnBullet(Vector3 SpawnPosition, Vector2 SpawnIndex, Vector2 velocity) {
+=======
+    public static Tween SpawnBullet(Vector3 SpawnPosition, Vector2 SpawnIndex, Vector2 velocity) {
+>>>>>>> c2a50ea37ba8e36bb0cc67f8efc388b7b2e9dd3d
         var bullet = Instantiate(Instance.BulletPrefab, SpawnPosition, Quaternion.identity).GetComponent<Bullet>();
 
-        bullet.Init(SpawnIndex, velocity);
-
         Instance.bullets.Add(bullet);
+
+        return bullet.Init(SpawnIndex, velocity);
     }
 
-    public static void NextStep() {
-        foreach (Bullet bul in Instance.bullets) {
-            Instance.StartCoroutine(bul.NextStep());
+    public static IEnumerator NextStep() {
+        Sequence bulletSequence = DOTween.Sequence();
+        foreach (Bullet bullet in Instance.bullets) {
+            var bulletTween = bullet.NextStep();
+            if(bulletTween != null)
+                bulletSequence.Join(bulletTween);
         }
+        bulletSequence.Play();
+        yield return bulletSequence.WaitForCompletion();
     }
 }
