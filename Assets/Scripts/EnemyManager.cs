@@ -18,23 +18,27 @@ public class EnemyManager : MonoBehaviour {
     }
 
     void Start() {
-        SpawnEnemy(new Vector2(5,5));
+        
     }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            NextStep();
+            SpawnEnemy(new Vector2(5, 5));
         }
     }
 
     public static void SpawnEnemy(Vector2 SpawnIndex) {
-        Vector2 temp = MapController.TilemapToWorldPoint((int)SpawnIndex.x, (int)SpawnIndex.y);
+        if(MapController.CheckValidPosition(SpawnIndex) && !MapController.CheckEntity(SpawnIndex)) {
+            Vector2 temp = MapController.TilemapToWorldPoint((int)SpawnIndex.x, (int)SpawnIndex.y);
 
-        Vector3 pos = new Vector3(temp.x, 1, temp.y);
-        var enemy = Instantiate(Instance.EnemyPrefab, pos, Quaternion.identity).GetComponent<Enemy>();
+            Vector3 pos = new Vector3(temp.x, 1, temp.y);
+            var enemy = Instantiate(Instance.EnemyPrefab, pos, Quaternion.identity).GetComponent<Enemy>();
 
-        MapController.SpawnEntity(enemy.gameObject, SpawnIndex);
-        Instance.enemies.Add(enemy);
+            MapController.SpawnEntity(enemy.gameObject, SpawnIndex);
+            Instance.enemies.Add(enemy);
+        } else {
+            Debug.LogError("Entity Cannot Spawn At Position : " + SpawnIndex.x + ":" + SpawnIndex.y);
+        }
     }
 
     public static void NextStep() {
