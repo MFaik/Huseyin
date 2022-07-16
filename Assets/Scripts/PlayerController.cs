@@ -16,20 +16,33 @@ public class PlayerController : MonoBehaviour
         XM
     }
 
+    void Start() {
+        MapController.SpawnEntity(gameObject, new Vector2(0,0));
+        Vector2 startPos = MapController.TilemapToWorldPoint(0,0);
+        transform.position = new Vector3(startPos.x, 0.5f, startPos.y);
+    }
+
     void Update() {
         if(Turning)
             return;
+
+        Vector2 tilemapPosition = MapController.WorldToTilemapPoint(transform.position.x, transform.position.z);
+        
         if(Input.GetAxisRaw("Horizontal") > 0.1f){
-            StartCoroutine(PlayerTurn(Direction.ZP));
+            if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(0,1)))
+                StartCoroutine(PlayerTurn(Direction.ZP));
         }  
         else if(Input.GetAxisRaw("Horizontal") < -0.1f){
-            StartCoroutine(PlayerTurn(Direction.ZM));
+            if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(0,-1)))
+                StartCoroutine(PlayerTurn(Direction.ZM));
         } 
         else if(Input.GetAxisRaw("Vertical") < -0.1f){
-            StartCoroutine(PlayerTurn(Direction.XP));
+            if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(1,0)))
+                StartCoroutine(PlayerTurn(Direction.XP));
         } 
         else if(Input.GetAxisRaw("Vertical") > 0.1f){
-            StartCoroutine(PlayerTurn(Direction.XM));
+            if(MapController.MoveTo(tilemapPosition, tilemapPosition + new Vector2(-1,0)))
+                StartCoroutine(PlayerTurn(Direction.XM));
         }   
     }
 

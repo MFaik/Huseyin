@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TempPlayerController : MonoBehaviour
 {
-    [SerializeField] float MoveTime = 1f;
+    /*[SerializeField] float MoveTime = 1f;
 
     MapController _mapController;
     float t = 0f;
@@ -16,7 +16,7 @@ public class TempPlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 pos = MapController.CalculatePositionFromLocation(transform.position.x, transform.position.z);
+        Vector2 pos = MapController.WorldToTilemapPoint(transform.position.x, transform.position.z);
 
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
@@ -36,8 +36,8 @@ public class TempPlayerController : MonoBehaviour
         
 
         if (_mapController.MoveTo(pos, tar)) {
-            Vector2 targetLocation = MapController.CalculatePositionFromIndex((int)tar.x, (int)tar.y);
+            Vector2 targetLocation = MapController.TilemapToWorldPoint((int)tar.x, (int)tar.y);
             transform.position = new Vector3(targetLocation.x, 1, targetLocation.y);
         }
-    }
+    }*/
 }
