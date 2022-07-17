@@ -20,12 +20,19 @@ class TurnManager : MonoBehaviour
         _playerController.EnableTurn();
     }
 
+    public static void ContinueTurnAfterMove() {
+        Instance.StartCoroutine(Instance.EnemyMove());
+    }
+    IEnumerator EnemyMove() {
+        yield return EnemyManager.NextMove();
+        Instance._playerController.EnableShoot();
+    }
     public static void ContinueTurnAfterPlayer(){
         Instance.StartCoroutine(Instance.ContinueTurn());
     }
 
     IEnumerator ContinueTurn(){
-        yield return EnemyManager.NextStep();
+        yield return EnemyManager.NextShoot();
         yield return BulletManager.NextStep();
         _playerController.EnableTurn();
     }
