@@ -137,9 +137,11 @@ GameObject:
   - component: {fileID: 49198474}
   - component: {fileID: 49198478}
   - component: {fileID: 49198479}
+  - component: {fileID: 49198480}
+  - component: {fileID: 49198481}
   m_Layer: 0
   m_Name: Mep
-  m_TagString: Untagged
+  m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -234,7 +236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f7558c994d35a43b83a8b3c6ed25e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MapObject: {fileID: 49198473}
 --- !u!114 &49198479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,7 +250,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 958781241460226014, guid: a1eaa026ee752dd43bb28dd4ba6c407d,
     type: 3}
-  SpawnLocation: {fileID: 652469047}
+--- !u!114 &49198480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49198473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c3758b1dcdb05f4cbf99b9087ba8fab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyPrefab: {fileID: 6076583146333416223, guid: 21a6f1a57cba0704abe634e2bc692f87,
+    type: 3}
+--- !u!114 &49198481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49198473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d3866dc3dca3ad4eb2647efb67f89e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &126992451
 PrefabInstance:
   m_ObjectHideFlags: 0

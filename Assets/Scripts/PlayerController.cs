@@ -66,6 +66,10 @@ public class PlayerController : MonoBehaviour
         CanTurn = true;
     }
 
+    public void EnableShoot() {
+        CanShoot = true;
+    }
+
     Vector3 ZP = new Vector3(0,0, 0.5f);
     Vector3 ZM = new Vector3(0,0,-0.5f);
     Vector3 XP = new Vector3( 0.5f,0,0);
@@ -104,7 +108,7 @@ public class PlayerController : MonoBehaviour
                 RendererChild.position -= XM;
             break;
         }
-        CanShoot = true;
+        TurnManager.ContinueTurnAfterMove();
     }
 
     IEnumerator Shoot(Vector2 direction){

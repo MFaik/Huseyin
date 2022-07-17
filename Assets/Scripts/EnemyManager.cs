@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class EnemyManager : MonoBehaviour {
     [SerializeField]
@@ -41,9 +42,26 @@ public class EnemyManager : MonoBehaviour {
         }
     }
 
-    public static IEnumerator NextStep() {
+    public static IEnumerator NextMove() {
+        Sequence enemyTweening = DOTween.Sequence();
+        Debug.Log("NextMove");
         foreach (Enemy enemy in Instance.enemies) {
-            yield return enemy.NextStep();
+            var enemyTween = enemy.NextMove();
+            if (enemyTween != null)
+                enemyTweening.Join(enemyTween);
         }
+        enemyTweening.Play();
+        yield return enemyTweening.WaitForCompletion();
+    }
+    public static IEnumerator NextShoot() {
+        Sequence enemyTweening = DOTween.Sequence();
+
+        foreach (Enemy enemy in Instance.enemies) {
+            var enemyTween = enemy.NextShoot();
+            if (enemyTween != null)
+                enemyTweening.Join(enemyTween);
+        }
+        enemyTweening.Play();
+        yield return enemyTweening.WaitForCompletion();
     }
 }
