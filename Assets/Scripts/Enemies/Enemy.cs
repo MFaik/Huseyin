@@ -7,6 +7,11 @@ public class Enemy : MonoBehaviour
     public void Update() {
         OnUpdate();
     }
+    private void Start() {
+        Init();
+    }
+
+    public virtual void Init() { }
     public virtual void OnUpdate() { }
 
     public virtual Tween NextMove() { return null; }
