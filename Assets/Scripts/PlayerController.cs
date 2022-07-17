@@ -45,7 +45,10 @@ public class PlayerController : MonoBehaviour
             else if(Input.GetAxisRaw("Horizontal") > 0.1f){
                 if(MapManager.MoveTo(tilemapPosition, tilemapPosition + new Vector2( 1,0)))
                     StartCoroutine(Turn(Direction.XP));
-            }   
+            }else if (Input.GetKeyDown(KeyCode.Backspace)) {
+                CanTurn = false;
+                TurnManager.ContinueTurnAfterMove();
+            }
         } else if(CanShoot) {
             if(Input.GetAxisRaw("Vertical") > 0.1f){
                 StartCoroutine(Shoot(new Vector2(0, 1)));
