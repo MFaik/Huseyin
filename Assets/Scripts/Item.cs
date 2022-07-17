@@ -9,12 +9,14 @@ public class Item : ScriptableObject
     public enum ItemEnum {
         Pistol,
         Shotgun,
-        Knife,
+        Sword,
     }
     
     public Material material;
 
     public ItemEnum item;
+
+    GameObject SwordPrefab;
 
     public IEnumerator Shoot(Vector3 position, Vector2 direction){
         switch(item){
@@ -43,6 +45,20 @@ public class Item : ScriptableObject
                                             MapManager.WorldToTilemapPoint(position.x + rightDirection.x, position.z + rightDirection.y),rightDirection));
 
                 yield return shotgunSequence.WaitForCompletion();
+            break;
+            case ItemEnum.Sword:
+                if(!SwordPrefab)
+                    SwordPrefab = Resources.Load("Items/Sword") as GameObject;
+                Quaternion swordRotation = Quaternion.identity;
+                if(direction.y == 1){
+                    swordRotation = Quaternion.Euler(0,90,0);
+                } else if(direction.y == -1){
+                    swordRotation = Quaternion.Euler(0,270,0);
+                } else if(direction.x == -1){
+                    swordRotation = Quaternion.Euler(0,0,0);
+                } else
+                    swordRotation = Quaternion.Euler(0,180,0);
+                yield return Instantiate(SwordPrefab,position,swordRotation).GetComponent<Sword>().Swing();
             break;
         }
     }
